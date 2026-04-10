@@ -6,7 +6,6 @@ const ICSSimulator = () => {
   const [units, setUnits] = useState([]);
   const [draggingUnit, setDraggingUnit] = useState(null);
 
-  // Personnel System
   const divisions = {
     police: { name: 'Police', color: '#0066CC', personnel: 6 },
     fire: { name: 'Fire/Rescue', color: '#FF3300', personnel: 6 },
@@ -16,7 +15,6 @@ const ICSSimulator = () => {
     ems: { name: 'EMS', color: '#00CC00', personnel: 6 },
   };
 
-  // Initialize units
   useEffect(() => {
     const initUnits = [];
     let id = 0;
@@ -35,7 +33,6 @@ const ICSSimulator = () => {
     setUnits(initUnits);
   }, []);
 
-  // Mouse events
   const handleMouseDown = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -63,7 +60,6 @@ const ICSSimulator = () => {
     }));
   };
 
-  // Canvas rendering
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -73,23 +69,19 @@ const ICSSimulator = () => {
     canvas.width = rect.width;
     canvas.height = rect.height;
 
-    // Background
     ctx.fillStyle = '#f0f0f0';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Zone backgrounds
     ctx.fillStyle = 'rgba(0, 150, 200, 0.08)';
     ctx.fillRect(0, 0, 200, canvas.height);
     ctx.fillRect(550, 0, canvas.width - 550, canvas.height);
 
-    // Zone labels
     ctx.fillStyle = '#333';
     ctx.font = 'bold 14px Arial';
     ctx.fillText('📍 STAGING', 20, 35);
     ctx.fillText('🎯 COMMAND', 280, 35);
     ctx.fillText('🚨 INCIDENT', 570, 35);
 
-    // Draw units
     units.forEach(unit => {
       ctx.beginPath();
       ctx.arc(unit.x, unit.y, 10, 0, Math.PI * 2);
@@ -129,7 +121,6 @@ const ICSSimulator = () => {
 
   return (
     <div style={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', fontFamily: 'Arial, sans-serif' }}>
-      {/* Header */}
       <div style={{ background: '#1a1a1a', color: '#fff', padding: '15px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1 style={{ margin: 0 }}>ICS 300/400 Incident Simulator</h1>
         <button onClick={startScenario} style={{ padding: '10px 16px', background: '#00aa44', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
@@ -137,7 +128,6 @@ const ICSSimulator = () => {
         </button>
       </div>
 
-      {/* Main Content */}
       <div style={{ display: 'flex', flex: 1, gap: '0' }}>
         <canvas
           ref={canvasRef}
@@ -147,7 +137,6 @@ const ICSSimulator = () => {
           style={{ flex: 1, border: '2px solid #333', background: '#f0f0f0', cursor: 'grab' }}
         />
 
-        {/* Right Panel */}
         <div style={{ width: '280px', background: '#f9f9f9', borderLeft: '1px solid #ddd', padding: '15px', overflowY: 'auto' }}>
           <h3 style={{ margin: '0 0 15px 0' }}>Unit Roster ({units.length})</h3>
           {units.map(u => (
